@@ -1,0 +1,170 @@
+<div class="main">
+  <div class="heading">
+    <i class="fa fa-address-book" style="font-size: 25px"
+      ><b> Phone Book App </b></i
+    >
+  </div>
+
+  <div class="subheading">
+    <h4>
+      <b>Contacts</b>
+      <button
+        type="button"
+        class="btn"
+        (click)="show()"
+      >
+        +Add contact
+      </button>
+    </h4>
+  </div>
+
+  <div class="md-form mt-0">
+    <div>
+      <input
+        class="form-control form-control-sm mr-3 w-75"
+        type="text"
+        placeholder="Search contact by name"
+        mdbInput
+        [(ngModel)]="searchKey"
+        style="width: 60%; float: left"
+        (input)="OnSearch()"
+      />
+      <div class="btn-group" style="float: left">
+        <span
+          ><button (click)="onSortbyName()" >
+            Sort By Name
+          </button></span
+        >
+        <span
+          ><button (click)="onSortbyNumber()" >
+            Sort By Num
+          </button></span
+        >
+      </div>
+    </div>
+
+    <div class="container">
+      <div
+        [style.display]="showModal ? 'block' : 'none'"
+        class="modal"
+        id="imagemodal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">New Contact</h4>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="registerForm">
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        formControlName="firstname"
+                        class="form-control"
+                        placeholder="firstname"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.firstname.errors
+                        }"
+                      />
+                      <div
+                        *ngIf="submitted && f.firstname.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.firstname.errors.required">
+                          FirstName is required
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        formControlName="lastname"
+                        class="form-control"
+                        placeholder="lastname"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.lastname.errors
+                        }"
+                      />
+                      <div
+                        *ngIf="submitted && f.lastname.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.lastname.errors.required">
+                          Last Name is required
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        formControlName="mobile"
+                        class="form-control"
+                        placeholder="Mobile number"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.mobile.errors
+                        }"
+                      />
+                      <div
+                        *ngIf="submitted && f.mobile.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.mobile.errors">
+                          Mobile must be Valid and at least 10 digits
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="modal-footer">
+              <button (click)="onSubmit()" class="btn-primary">
+                Create
+              </button>
+              <button
+                type="button"
+                class="btn-dark"
+                data-dismiss="modal"
+                (click)="hide()"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-primary" *ngFor="let a of contacts" id="contact1" style="margin-top: 20px;">
+      <div style="width: 90%; float: left; ">
+        <div>
+          <b> {{ a.firstname }} {{ a.lastname }} </b><br />
+        </div>
+        <div>
+          <i
+            class="fa fa-phone"
+            aria-hidden="true"
+            style="float: left; color: grey; padding: 1%"
+          ></i>
+          {{ a.mobile }}
+        </div>
+      </div>
+      <div style="width: 10%; float: left">
+        <button (click)="onDelete()" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
